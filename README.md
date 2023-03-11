@@ -16,7 +16,7 @@ ________________________________
 <h3>Chạy chương trình</h3>
 
 train cho model của chúng ta hiểu đâu là fake, đâu là real : 
-<br><b>chạy python train_liveness.py</b>
+<br><b>chạy python train_liveness.py</b><br>
  Kiểm thử model Chống giả mạo 
 <br><b>chạy python liveness_demo.py </b>
 
