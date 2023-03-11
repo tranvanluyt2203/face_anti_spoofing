@@ -3,12 +3,14 @@
 
 # import the necessary packages
 from imutils.video import VideoStream
-from keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import img_to_array
+#from keras.preprocessing.image import img_to_array
 from keras.models import load_model
 import numpy as np
 import argparse
 import imutils
 import pickle
+
 import time
 import cv2
 import os
@@ -37,8 +39,7 @@ net = cv2.dnn.readNetFromCaffe(protoPath, modelPath)
 # Load model nhan dien fake/real
 print("[INFO] loading liveness detector...")
 model = load_model(args["model"])
-le = pickle.loads(open(args["le"], "rb").read())
-
+le = pickle.load(open(args["le"], "rb"))
 #  Doc video tu webcam
 print("[INFO] starting video stream...")
 vs = VideoStream(src=0).start()
