@@ -17,6 +17,7 @@ import pickle
 import cv2
 import os
 
+
 # Cac tham so dau vao
 ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", default='dataset',
@@ -31,8 +32,8 @@ args = vars(ap.parse_args())
 
 # Cai dat learn rate, so epoch=40, batch size =8
 INIT_LR = 1e-4
-BS = 8
-EPOCHS = 40
+BS = 20
+EPOCHS = 20
 
 # Doc du lieu khuon mat trong Dataset
 print("[INFO] loading images...")
@@ -73,12 +74,25 @@ model = LivenessNet.build(width=32, height=32, depth=3,
 	classes=len(le.classes_))
 model.compile(loss="binary_crossentropy", optimizer=opt,
 	metrics=["accuracy"])
-
+'''
 # train
 print("[INFO] training network for {} epochs...".format(EPOCHS))
 H = model.fit_generator(aug.flow(trainX, trainY, batch_size=BS),
 	validation_data=(testX, testY), steps_per_epoch=len(trainX) // BS,
 	epochs=EPOCHS)
+
+'''
+from keras.callbacks import EarlyStopping
+
+# early stopping
+early_stopping = EarlyStopping(monitor='val_loss', patience=5)
+
+# train
+print("[INFO] training network for {} epochs...".format(EPOCHS))
+H = model.fit_generator(aug.flow(trainX, trainY, batch_size=BS),
+	validation_data=(testX, testY), steps_per_epoch=len(trainX) // BS,
+	epochs=EPOCHS, callbacks=[early_stopping])
+
 
 # eval
 print("[INFO] evaluating network...")

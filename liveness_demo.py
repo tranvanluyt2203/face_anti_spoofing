@@ -42,6 +42,7 @@ model = load_model(args["model"])
 le = pickle.load(open(args["le"], "rb"))
 #  Doc video tu webcam
 print("[INFO] starting video stream...")
+
 vs = VideoStream(src=0).start()
 
 time.sleep(2.0)
@@ -87,7 +88,7 @@ while True:
 
 			j = np.argmax(preds)
 			label = le.classes_[j]
-
+			print(label)
 			# Ve hinh chu nhat quanh mat
 			label = "{}: {:.4f}".format(label, preds[j])
 			if (j==0):
